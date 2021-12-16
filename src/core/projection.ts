@@ -66,7 +66,7 @@ export default class Projection {
                 Math.pow(2, reszoomlevel)
             const res = []
             for (let i = 0; i < 32; i++) {
-                res.push(baseRes / Math.pow(2, i))
+                res.push(baseRes / Math.pow(2, i + 4))
             }
             this.res = res
         }
@@ -269,12 +269,12 @@ export default class Projection {
         const Q = Math.sqrt(1 + 2 * Math.pow(this.e, 4) * P)
         const r0 =
             -(P * Math.pow(this.e, 2) * r) / (1 + Q) +
-            Math.sqrt(
+            Math.sqrt(Math.max(
                 0.5 * Math.pow(rs, 2) * (1 + 1 / Q) -
                     (P * (1 - Math.pow(this.e, 2)) * Math.pow(xyz.z, 2)) /
                         (Q * (1 + Q)) -
-                    0.5 * P * Math.pow(r, 2)
-            )
+                    0.5 * P * Math.pow(r, 2),
+            0))
         const U = Math.sqrt(r - Math.pow(this.e, 2) * r0 + Math.pow(xyz.z, 2))
         const V = Math.sqrt(
             Math.pow(r - Math.pow(this.e, 2) * r0, 2) +
